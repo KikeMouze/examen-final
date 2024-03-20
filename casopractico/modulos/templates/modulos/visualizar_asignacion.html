@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Detalles de Asignación</h1>
+      <p><strong>Asignación:</strong> {{ asignacion.asignacion }}</p>
+      <p><strong>Cliente:</strong> {{ asignacion.clientes.nombre }}</p>
+      <p><strong>Miembro:</strong> {{ asignacion.miembros.nombre }}</p>
+      <p><strong>Casos:</strong> {{ asignacion.casos.tipo }}</p>
+      <p><strong>Fecha de Inicio:</strong> {{ asignacion.campo_inicio }}</p>
+      <p><strong>Fecha Límite:</strong> {{ asignacion.fechalimite }}</p>
+      <p><strong>Estado:</strong> {{ asignacion.estado }}</p>
+      <p><strong>Prioridades:</strong> {{ asignacion.prioridades }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h1 class="mb-4">Evidencias de Tareas</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Miembro</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Límite</th>
+          <th>Estado</th>
+          <th>Prioridades</th>
+          <th>Archivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for evidencia in evidencias %}
+        <tr>
+          <td>{{ evidencia.descripcion }}</td>
+          <td>{{ evidencia.miembro }}</td>
+          <td>{{ evidencia.campo_inicio }}</td>
+          <td>{{ evidencia.fechalimite }}</td>
+          <td>{{ evidencia.estado }}</td>
+          <td>{{ evidencia.prioridades }}</td>
+          <td>
+            {% if evidencia.archivo_evidencia %}
+            <a href="{{ evidencia.archivo_evidencia.url }}" download>Descargar Archivo</a>
+            {% else %}
+            No archivo disponible
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

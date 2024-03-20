@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+<div class="container">
+  <h1 class="mt-4 mb-4"> Tarea</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Tarea: {{ evidenciaTarea.tarea }}</h5>
+      <p class="card-text">Miembro: {{ evidenciaTarea.miembro }}</p>
+      <p class="card-text">Archivo de Evidencia: <a href="{% url 'descargar_archivo_evidencia' evidenciatarea_id=evidenciaTarea.pk %}" download="{{ evidenciaTarea.archivo_evidencia.name }}">Descargar</a></p>
+      <p class="card-text">Fecha de Inicio: {{ evidenciaTarea.campo_inicio }}</p>
+      <p class="card-text">Fecha Límite: {{ evidenciaTarea.fechalimite }}</p>
+      <p class="card-text">Estado: {{ evidenciaTarea.estado }}</p>
+      <p class="card-text">Prioridad: {{ evidenciaTarea.prioridades }}</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

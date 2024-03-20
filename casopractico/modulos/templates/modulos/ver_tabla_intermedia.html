@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h1 class="mt-5">Tabla Intermedia de {{ request.user.personauno }}</h1>
+  <table class="table table-striped mt-3">
+      <thead>
+          <tr>
+              <th>miembro</th>
+              <th>casos</th>
+              <th>archivo</th>
+              <th>Fecha Inicio</th>
+              <th>fechalimite</th>
+              <th>prioridades</th>
+              <th>estado</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for registro in registros_tabla_intermedia %}
+          <tr>
+              <td>{{ registro.miembros.nombre }}</td>
+              <td>{{ registro.casos.tipo }}</td>
+              <td>{{ registro.archivo }}</td>
+              <td>{{ registro.campo_inicio }}</td>
+              <td>{{ registro.fechalimite }}</td>
+              <td>{{ registro.prioridades }}</td>
+              <td>{{ registro.estado }}</td>
+
+
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

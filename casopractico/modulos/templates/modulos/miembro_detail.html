@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Miembro de abogados</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="card-subtitle mb-2 ">Nombre: {{ miembro.nombre }}</h5>
+          <p class="card-text">Apellido: {{ miembro.apellido }}</p>
+          <p class="card-text">Cédula: {{ miembro.cedula }}</p>
+          <p class="card-text">Correo: {{ miembro.correo }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h1 class="mb-4">Detalles de los casos</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Caso</th>
+          <th>Archivo</th>
+          <th>Fecha</th>
+          <th>fechalimite</th>
+          <th>prioridades</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for registrointermedio in registros_tabla_intermedia %}
+        <tr>
+          <td>{{ registrointermedio.clientes.nombre }}</td>
+          <td>{{ registrointermedio.casos.tipo }}</td>
+          <td>
+            {% if registrointermedio.archivo %}
+              <a href="{% url 'descargar_archivo' asignacion_id=registrointermedio.pk %}" download="{{ registrointermedio.archivo.name }}">Descargar</a>
+            {% else %}
+              No archivo disponible
+            {% endif %}
+          </td>
+           
+          <td>{{ registrointermedio.campo_inicio }}</td>
+          <td>{{ registrointermedio.fechalimite }}</td>
+
+          <td>{{ registrointermedio.prioridades }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      
+    </table>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

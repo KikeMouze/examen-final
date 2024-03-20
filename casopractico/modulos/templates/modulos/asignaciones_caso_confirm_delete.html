@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser%}
+
+<h1>Delete Persona: {{ asignaciones_caso.clientes }}</h1>
+
+{% if asignaciones_caso.has_related_objects %}
+<p>No puedes eliminar este asignaciones_caso hasta que todos los objetos relacionados hayan sido eliminados:</p>
+<ul>
+  {% for related_object in asignaciones_caso.related_objects %}
+    <li>{{ related_object }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>¿Estás seguro de que quieres eliminar el asignaciones_caso?</p>
+
+<form action="{% url 'asignaciones_caso-delete' pk=asignaciones_caso.pk %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Sí, eliminar">
+</form>
+{% endif %}
+{% endif %}
+
+{% endblock %}

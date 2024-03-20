@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="mt-4 mb-4">Evidencia de Asignación de Caso</h1>
+        
+        <h2>Evidencia</h2>
+        <ul>
+          {% for evidencia in evidencia_asignacion %}
+            <li>{{ evidencia.descripcion }}</li>
+          {% empty %}
+            <li>No hay evidencia disponible para esta asignación de caso.</li>
+          {% endfor %}
+        </ul>
+        
+        <a href="{% url 'ruta_a_otra_vista' %}" class="btn btn-primary">Volver</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

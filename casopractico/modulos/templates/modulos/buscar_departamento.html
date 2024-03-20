@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4 mb-4">Buscar Departamentos Publicados en un Rango de Fechas</h1>
+    <form action="{% url 'buscar-departamento' %}" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="fecha_inicio" class="form-label">Fecha de Inicio (YYYY-MM-DD):</label>
+                <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control"><br>
+            </div>
+            <div class="col-md-6">
+                <label for="fecha_fin" class="form-label">Fecha de Fin (YYYY-MM-DD):</label>
+                <input type="text" id="fecha_fin" name="fecha_fin" class="form-control"><br>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+   
+    <h1 class="mt-4 mb-4">Buscar Departamentos por Año</h1>
+    <form action="{% url 'buscar-departamento' %}" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="año" class="form-label">Año:</label>
+                <input type="text" id="año" name="año" class="form-control">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    
+    <h1 class="mt-4 mb-4">Buscar Departamentos Publicados en un Rango de Años</h1>
+    <form action="{% url 'buscar-departamento' %}" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="año_inicio" class="form-label">Año de Inicio:</label>
+                <input type="text" id="año_inicio" name="año_inicio" class="form-control"><br>
+            </div>
+            <div class="col-md-6">
+                <label for="año_fin" class="form-label">Año de Fin:</label>
+                <input type="text" id="año_fin" name="año_fin" class="form-control"><br>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    {% if departamentos %}
+    <h2 class="mt-4">Resultados de la Búsqueda</h2>
+    <ul class="list-group">
+        {% for departamento in departamentos %}
+            <li class="list-group-item">
+                <strong>Nombre:</strong> {{ departamento.nombre }} <br>
+                <strong>Descripción:</strong> {{ departamento.descripcion }} <br>
+                <strong>Fecha de Publicación:</strong> {{ departamento.campo_fecha }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+
+
+    {% endblock %}

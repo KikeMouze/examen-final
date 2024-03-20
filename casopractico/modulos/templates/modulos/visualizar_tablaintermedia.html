@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser%}
+
+<div class="container">
+  <h1>Detalles de TablaIntermedia</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <p><strong>Persona Uno:</strong> {{ tablaintermedia.personaunos }}</p>
+      <p><strong>Insumo:</strong> {{ tablaintermedia.insumos }}</p>
+      <p><strong>Archivo:</strong> {% if tablaintermedia.archivo %}<a href="{{ tablaintermedia.archivo.url }}" download>Descargar</a>{% else %}No archivo disponible{% endif %}</p>
+      <p><strong>Fecha:</strong> {{ tablaintermedia.fecha }}</p>
+    </div>
+    <div class="col-md-6">
+      <p><strong>Persona Dos:</strong> {{ tablaintermedia.personasdos }}</p>
+      <p><strong>Cantidad de registros relacionados con Persona Uno:</strong> {{ cantidad_registros_persona_uno }}</p>
+      <p><strong>Cantidad de registros relacionados con Persona Dos:</strong> {{ cantidad_registros_persona_dos }}</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

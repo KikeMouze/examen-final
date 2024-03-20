@@ -1,0 +1,90 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser%}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mt-4 mb-4">Lista de Abogados</h1>
+      <div class="col-md-12 mb-4">
+        <a href="{% url 'miembro-create' %}" class="btn btn-success">Crear miembro</a>
+      </div>
+      <form method="get" class="mb-4">
+        <div class="input-group">
+          <input type="text" class="form-control" name="q" placeholder="Buscar por nombre o cedula" value="{{ query }}" >
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </form>
+     
+
+     
+    
+
+
+
+
+
+
+
+
+
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>nombre</th>
+            <th>apellido</th>
+            <th>cedula</th>
+            <th>correo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for miembro in object_list %}
+            <tr>
+              <td>{{ miembro.id }}</td>
+              <td>{{ miembro.nombre }}</td>
+              <td>{{ miembro.apellido }}</td>
+              <td>{{ miembro.cedula }}</td>
+              <td>{{ miembro.correo }}</td>
+     
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="accionesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Acciones
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="accionesDropdown">
+                    <li><a class="dropdown-item" href="{% url 'miembro-update' pk=miembro.pk %}">Actualizar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'miembro-delete' pk=miembro.pk %}">Eliminar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'visualizar_persona_dos' miembro_id=miembro.pk %}">Ver</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if object_list.has_previous %}
+              <a href="?page=1">&laquo; Primera</a>
+              <a href="?page={{ object_list.previous_page_number }}">Anterior</a>
+            {% endif %}
+            
+            {% if object_list.has_next %}
+              <a href="?page={{ object_list.next_page_number }}">Siguiente</a>
+              <a href="?page={{ object_list.paginator.num_pages }}">Anterior &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

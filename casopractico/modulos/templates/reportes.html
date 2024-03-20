@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Reportes</h1> 
+    <div class="list-group">
+        <a href="{% url 'reporte_personauno' %}" class="list-group-item list-group-item-action btn btn-primary"><i class="fas fa-list-alt"></i> Listado persona uno</a>
+        <a href="{% url 'generar_pdf' %}" class="list-group-item list-group-item-action btn btn-primary"><i class="fas fa-list-alt"></i> Generar pdf</a>
+    </div>
+{% endblock %}
+
+

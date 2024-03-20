@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser%}
+
+<div class="container">
+  <h1 class="mt-4 mb-4">Caso</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">tipo: {{ caso.tipo }}</h5>
+      <p class="card-text">fechaInicio: {{ caso.fechaInicio }}</p>
+      <p class="card-text">detalleRelevantes: {{ caso.detalleRelevantes }}</p>
+    
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

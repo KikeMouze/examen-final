@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+
+{% block title %}asignaciontareas de Persona Uno{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">asignaciones</h1>
+    {% if asignaciontareas %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>tipo</th>
+                    <th>fechaInicio</th>
+                    <th>detalleRelevantes </th>
+                 
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for asignacionTarea in asignaciontareas %}
+                    <tr>
+                        <td>{{ asignacionTarea.tipo }}</td>
+                        <td>{{ asignacionTarea.fechaInicio }}</td>
+                        <td>{{ asignacionTarea.detalleRelevantes }}</td>
+                        
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron asignaciontareas asociados a Persona Uno.</p>
+    {% endif %}
+</div>
+{% endblock %}

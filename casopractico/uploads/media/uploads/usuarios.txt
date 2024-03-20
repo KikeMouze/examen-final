@@ -1,0 +1,2 @@
+kike,123,administrador
+mouze,2,tecnico

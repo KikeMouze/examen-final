@@ -1,0 +1,84 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser%}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mt-4 mb-4">Lista de Audiencias</h1>
+      <div class="col-md-12 mb-4">
+        <a href="{% url 'audiencia-create' %}" class="btn btn-success">Crear audiencia</a>
+      </div>
+      <form method="get" class="mb-4">
+        <div class="input-group">
+          <input type="text" class="form-control" name="q" placeholder="Buscar por año de la fecha de aundiencia" value="{{ query }}" >
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </form>
+     
+
+
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Cliente</th>
+            <th>Miembro</th>
+            <th>Caso</th>
+            <th>Fecha Límite</th>
+            <th>Fecha Audiencia</th>
+            <th>Plazo Crítico</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for audiencia in object_list %}
+            <tr>
+              <td>{{ audiencia.caso.id }}</td>
+              <td>{{ audiencia.caso.clientes }}</td>
+              <td>{{ audiencia.caso.miembros }}</td>
+              <td>{{ audiencia.caso.casos }}</td>
+              <td>{{ audiencia.caso.fechalimite }}</td>
+              <td>{{ audiencia.fecha }}</td>
+              <td>{{ audiencia.plazo_critico }}</td>
+            
+     
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="accionesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Acciones
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="accionesDropdown">
+                    <li><a class="dropdown-item" href="{% url 'audiencia-update' pk=audiencia.pk %}">Actualizar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'audiencia-delete' pk=audiencia.pk %}">Eliminar</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if object_list.has_previous %}
+              <a href="?page=1">&laquo; Primera</a>
+              <a href="?page={{ object_list.previous_page_number }}">Anterior</a>
+            {% endif %}
+            
+            {% if object_list.has_next %}
+              <a href="?page={{ object_list.next_page_number }}">Siguiente</a>
+              <a href="?page={{ object_list.paginator.num_pages }}">Anterior &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+

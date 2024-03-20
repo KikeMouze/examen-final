@@ -1,0 +1,72 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        Se ha producido un error. Intente actualizar la página
+    </div>
+{% endif %}
+
+{% if not user.is_authenticated %}
+    {# Mostrar solo si el usuario no está autenticado #}
+    {% if next %}
+        <div class="alert alert-warning" role="alert">
+            Tu cuenta no tiene acceso a esta página. Para proceder, inicie sesión con una cuenta que tenga acceso.
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Iniciar la sesión
+        </div>
+    {% endif %}
+    <form class="prueba2 login-form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <label for="{{ form.username.id_for_label }}" class="col-sm-12 col-form-label text-center">{{ form.username.label }}</label>
+            <div class="col-sm-12 text-center">
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label text-center">{{ form.password.label }}</label>
+            <div class="col-sm-12 text-center">
+                {{ form.password }}
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </div>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+    
+    {# Assumes you set up the password_reset view in your URLconf #}
+    <div class="text-center">
+        <p><a href="{% url 'password_reset' %}" class="btn btn-success text-white">Restauración de contraseña</a></p>
+    </div>
+   {% endif %}
+
+<style scoped>
+    .login-form {
+        background-image: url('/ruta/a/tu/imagen.jpg'); /* Reemplaza 'ruta/a/tu/imagen.jpg' con la ruta correcta de tu imagen de fondo */
+        background-size: cover;
+        padding: 20px;
+        margin: 20px;
+    }
+
+   .prueba2 {
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+   .colo {
+        color: black;
+   }
+</style>
+{% endblock %}

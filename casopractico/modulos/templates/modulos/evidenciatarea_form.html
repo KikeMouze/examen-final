@@ -1,0 +1,44 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+  <h1 class="mt-4 mb-4">Agregar Nueva Evidencia de Tarea</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="id_tareas" class="form-label">Asignacion</label>
+      {{ form.asignacion }}
+    </div>
+    <div class="mb-3">
+      <label for="id_miembro" class="form-label">Miembro</label>
+      {{ form.miembro }}
+    </div>
+    <div class="mb-3">
+      <label for="id_estado" class="form-label">Descripcion</label>
+      {{ form.descripcion }}
+    </div>
+    <div class="mb-3">
+      <label for="id_archivo_evidencia" class="form-label">Archivo de Evidencia</label>
+      {{ form.archivo_evidencia }}
+    </div>
+    <div class="mb-3">
+      <label for="id_campo_inicio" class="form-label">Fecha de Inicio</label>
+      {{ form.campo_inicio }}
+    </div>
+    <div class="mb-3">
+      <label for="id_fechalimite" class="form-label">Fecha Límite</label>
+      {{ form.fechalimite }}
+    </div>
+    <div class="mb-3">
+      <label for="id_estado" class="form-label">Estado</label>
+      {{ form.estado }}
+    </div>
+    <div class="mb-3">
+      <label for="id_prioridades" class="form-label">Prioridades</label>
+      {{ form.prioridades }}
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
+{% endblock %}

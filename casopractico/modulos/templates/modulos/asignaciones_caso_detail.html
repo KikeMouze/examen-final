@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Cliente: {{ asignaciones_caso.clientes }}</h5>
+      <p class="card-text">Miembro: {{ asignaciones_caso.miembros }}</p>
+      <p class="card-text">Caso: {{ asignaciones_caso.casos }}</p>
+      <p class="card-text">Fecha: {{ asignaciones_caso.campo_inicio }}</p>
+      <p class="card-text">Fecha Límite: {{ asignaciones_caso.fechalimite }}</p>
+      <p class="card-text">Prioridad: {{ asignaciones_caso.prioridades }}</p>
+      
+      <h5 class="mt-4">Evidencias de las tareas:</h5>
+      <ul class="list-group">
+        {% for evidencia in asignaciones_caso.evidencias_tarea.all %}
+          <li class="list-group-item">
+            <p class="mb-1">Descripción: {{ evidencia.descripcion }}</p>
+            <p class="mb-1">Miembro: {{ evidencia.miembro }}</p>
+            <p class="mb-1">Estado: {{ evidencia.estado }}</p>
+            <p class="mb-1">Prioridad: {{ evidencia.prioridades }}</p>
+            <p class="mb-1">Fecha de Inicio: {{ evidencia.campo_inicio }}</p>
+            <p class="mb-1">Fecha Fin: {{ evidencia.fechalimite }}</p>
+
+            {% if evidencia.archivo_evidencia %}
+              <p class="mb-1">
+                <a href="{% url 'descargar_evidencia_asignacion' evidencia_id=evidencia.pk %}" class="btn btn-primary" download>Descargar archivo</a>
+              </p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

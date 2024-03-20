@@ -1,0 +1,91 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_superuser or user.groups.all.0.name == 'Miembro'%}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mt-4 mb-4">Lista de Asignaciones de Casos</h1>
+      <div class="col-md-12 mb-4">
+        <a href="{% url 'asignaciones_caso-create' %}" class="btn btn-success">Crear asignación</a>
+      </div>
+      <form method="get" class="mb-4">
+        <div class="input-group">
+          <input type="text" class="form-control" name="q" placeholder="Buscar por id" value="{{ query }}" >
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </form>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Cliente</th>
+            <th>Miembro</th>
+            <th>Casos</th>
+            <th>Archivo</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Limite</th>
+            <th>Prioridades</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for asignaciones_caso in object_list %}
+            <tr>
+              <td>{{ asignaciones_caso.id }}</td>
+              <td>{{ asignaciones_caso.clientes }}</td>
+              <td>{{ asignaciones_caso.miembros }}</td>
+              <td>{{ asignaciones_caso.casos }}</td>
+              <td>
+                {% if asignaciones_caso.archivo %}
+                  <a href="{% url 'descargar_archivo' asignacion_id=asignaciones_caso.pk %}" download="{{ asignaciones_caso.archivo.name }}">Descargar</a>
+                {% else %}
+                  No archivo disponible
+                {% endif %}
+              </td>
+              <td>{{ asignaciones_caso.campo_inicio }}</td>
+              <td>{{ asignaciones_caso.fechalimite }}</td>
+              <td>{{ asignaciones_caso.prioridades }}</td>
+              <td>{{ asignaciones_caso.estado }}</td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="accionesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Acciones
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="accionesDropdown">
+                    <li><a class="dropdown-item" href="{% url 'asignaciones_caso-update' pk=asignaciones_caso.pk %}">Actualizar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'asignaciones_caso-delete' pk=asignaciones_caso.pk %}">Eliminar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'visualizar_asignacion' asignacion_id=asignaciones_caso.pk %}">Ver</a></li>
+
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if object_list.has_previous %}
+              <a href="?page=1">&laquo; Primera</a>
+              <a href="?page={{ object_list.previous_page_number }}">Anterior</a>
+            {% endif %}
+            
+            {% if object_list.has_next %}
+              <a href="?page={{ object_list.next_page_number }}">Siguiente</a>
+              <a href="?page={{ object_list.paginator.num_pages }}">Anterior &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
